@@ -46,12 +46,16 @@ public enum RomanNumerals {
         //      if (romanNumeral.length() > 0)
         //          throw new IllegalArgumentException(input + " cannot be converted to a Roman Numeral");
         // и зачем эти строки тут, быть может == нужно, вместо >
-        //     System.out.println(romanNumeral.length());
         return result;
     }
 
     public static String arabicToRoman(int number) {
-        if ((number < 0) || (number > 100)) {
+        boolean checkPos = false;
+        if (number < 0) {
+            number = -number;
+            checkPos = true;
+        }
+        if ((number < -10) || (number > 100)) {
             throw new IllegalArgumentException(number + " is not in range 1 - 100");
         }
 
@@ -69,6 +73,9 @@ public enum RomanNumerals {
                 i++;
             }
         }
-        return sb.toString();
+        if (checkPos)
+            return "-" + sb.toString();
+        else
+            return sb.toString();
     }
 }
