@@ -24,7 +24,7 @@ public enum RomanNumerals {
     }
 
     public static int romanToArabic(String input) {
-        String romanNumeral = input.toUpperCase();
+        String romanNumeral = input;
         if (romanNumeral.isEmpty())
             throw new IllegalArgumentException(input + " cannot be converted to a Roman Numeral");
         int result = 0;
@@ -42,10 +42,6 @@ public enum RomanNumerals {
                 i++;
             }
         }
-
-        //      if (romanNumeral.length() > 0)
-        //          throw new IllegalArgumentException(input + " cannot be converted to a Roman Numeral");
-        // и зачем эти строки тут, быть может == нужно, вместо >
         return result;
     }
 
@@ -55,7 +51,7 @@ public enum RomanNumerals {
             number = -number;
             checkPos = true;
         }
-        if ((number < -10) || (number > 100)) {
+        if (number > 100) {
             throw new IllegalArgumentException(number + " is not in range 1 - 100");
         }
 
