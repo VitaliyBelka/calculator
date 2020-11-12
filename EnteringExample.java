@@ -35,14 +35,17 @@ public class EnteringExample {
         if (list.get(0) == null)
             throw new IllegalArgumentException(expression + " unknown calculation operation");
 
-        String[] brokenExample = expression.split("[ /*+-]");
+        String[] brokenExample = expression.split("[/*+-]");
+        for (int i = 0; i < brokenExample.length; i++) {
+            brokenExample[i] = brokenExample[i].replaceAll("\\s+", "");
+        }
         list.addAll(Arrays.asList(brokenExample));
         list.removeAll(Arrays.asList("", null));
 
         if (isRomanNumber(list.get(1))) {
-            String tmp = "" + RomanNumerals.romanToArabic(list.get(1));
+            String tmp = "" + RomanNumeral.romanToArabic(list.get(1));
             list.set(1, tmp);
-            tmp = "" + RomanNumerals.romanToArabic(list.get(2));
+            tmp = "" + RomanNumeral.romanToArabic(list.get(2));
             list.set(2, tmp);
             checkRoman = true;
         }
