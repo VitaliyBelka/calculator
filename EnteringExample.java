@@ -11,6 +11,7 @@ public class EnteringExample {
     private String expression;
     private final ArrayList<String> list = new ArrayList<>();
     private boolean checkRoman;
+    private int spaceCount;
 
     public ArrayList<String> getList() {
         return list;
@@ -35,12 +36,15 @@ public class EnteringExample {
         if (list.get(0) == null)
             throw new IllegalArgumentException(expression + " unknown calculation operation");
 
+        spaceCount(expression);
+        if (spaceCount > 2 )
+            throw new IllegalArgumentException("too many spaces. I can only count to two");
+
         String[] brokenExample = expression.split("[/*+-]");
         for (int i = 0; i < brokenExample.length; i++) {
             brokenExample[i] = brokenExample[i].replaceAll("\\s+", "");
         }
         list.addAll(Arrays.asList(brokenExample));
-        list.removeAll(Arrays.asList("", null));
 
         if (isRomanNumber(list.get(1))) {
             String tmp = "" + RomanNumeral.romanToArabic(list.get(1));
@@ -95,5 +99,12 @@ public class EnteringExample {
                 return false;
         }
         return true;
+    }
+
+    void spaceCount(String s) {
+        for (char c : s.toCharArray()) {
+            if (c == ' ')
+                spaceCount++;
+        }
     }
 }
