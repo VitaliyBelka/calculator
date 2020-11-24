@@ -15,9 +15,7 @@ public class Calculator {
             default -> number1 / number2;
         };
 
-        if (check && sum == 0)
-            System.out.println("N");
-        else if (check)
+        if (check)
             System.out.println(RomanNumeral.arabicToRoman(sum));
         else
             System.out.println(sum);

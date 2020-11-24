@@ -1,7 +1,7 @@
 import java.util.Arrays;
 import java.util.Comparator;
-import java.util.stream.Collectors;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public enum RomanNumeral {
     I(1), IV(4), V(5), IX(9), X(10),
@@ -19,59 +19,57 @@ public enum RomanNumeral {
 
     public static List<RomanNumeral> getReverseSortedValues() {
         return Arrays.stream(values())
-                .sorted(Comparator.comparing((RomanNumeral e) -> e.value).reversed())
+                .sorted(Comparator.comparing(RomanNumeral::getValue).reversed())
                 .collect(Collectors.toList());
+
     }
 
-    public static int romanToArabic(String input) {
-        String romanNumeral = input;
-        if (romanNumeral.isEmpty())
-            throw new IllegalArgumentException(input + " cannot be converted to a Roman Numeral");
+    public static int romanToArabic(String s) {
+        String roman = s;
         int result = 0;
+        List<RomanNumeral> romanNumerals = getReverseSortedValues();
 
-        List<RomanNumeral> romanNumerals = RomanNumeral.getReverseSortedValues();
-
-        int i = 0;
-
-        while ((romanNumeral.length() > 0) && (i < romanNumerals.size())) {
+        for (int i = 0; i < romanNumerals.size(); i++) {
             RomanNumeral symbol = romanNumerals.get(i);
-            if (romanNumeral.startsWith(symbol.name())) {
+            if (roman.startsWith(symbol.name())) {
                 result += symbol.getValue();
-                romanNumeral = romanNumeral.substring(symbol.name().length());
-            } else {
-                i++;
+                roman = roman.substring(symbol.name().length());
+                i--;
             }
+            if (roman.length() == 0)
+                break;
         }
+
         return result;
     }
 
-    public static String arabicToRoman(int number) {
-        boolean checkPos = false;
-        if (number < 0) {
-            number = -number;
-            checkPos = true;
+    public static String arabicToRoman(int arabic) {
+        if (arabic == 0)
+            return "N";
+
+        boolean negative = false;
+        if (arabic < 0) {
+            arabic = -arabic;
+            negative = true;
         }
-        if (number > 100) {
-            throw new IllegalArgumentException(number + " is not in range 1 - 100");
-        }
 
-        List<RomanNumeral> romanNumerals = RomanNumeral.getReverseSortedValues();
+        List<RomanNumeral> romanNumerals = getReverseSortedValues();
+        StringBuilder roman = new StringBuilder();
 
-        int i = 0;
-        StringBuilder sb = new StringBuilder();
-
-        while ((number > 0) && (i < romanNumerals.size())) {
-            RomanNumeral currentSymbol = romanNumerals.get(i);
-            if (currentSymbol.getValue() <= number) {
-                sb.append(currentSymbol.name());
-                number -= currentSymbol.getValue();
-            } else {
-                i++;
+        for (int i = 0; i < romanNumerals.size(); i++) {
+            RomanNumeral symbol = romanNumerals.get(i);
+            if (symbol.getValue() <= arabic) {
+                roman.append(symbol.name());
+                arabic -= symbol.getValue();
+                i--;
             }
+            if (arabic == 0)
+                break;
         }
-        if (checkPos)
-            return "-" + sb.toString();
+
+        if (negative)
+            return "-" + roman.toString();
         else
-            return sb.toString();
+            return roman.toString();
     }
 }
