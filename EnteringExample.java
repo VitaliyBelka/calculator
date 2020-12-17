@@ -33,12 +33,14 @@ public class EnteringExample {
         addOperationToList(expression);
         checkDoubleOperations(expression);
 
-        if (list.get(0) == null)
+        if (list.get(0) == null) {
             throw new IllegalArgumentException(expression + " unknown calculation operation");
+        }
 
         spaceCount(expression);
-        if (spaceCount > 2 )
+        if (spaceCount > 2 ) {
             throw new IllegalArgumentException("too many spaces. I can only count to two");
+        }
 
         String[] brokenExample = expression.split("[/*+-]");
         for (int i = 0; i < brokenExample.length; i++) {
@@ -54,8 +56,9 @@ public class EnteringExample {
             checkRoman = true;
         }
 
-        if (list.size() != 3 ^ isArabicNumber(list.get(1)) ^ isArabicNumber(list.get(2)))
+        if (list.size() != 3 ^ isArabicNumber(list.get(1)) ^ isArabicNumber(list.get(2))) {
             throw new IllegalArgumentException(expression + " unknown calculation operation");
+        }
     }
 
     void addOperationToList(String s) {
@@ -69,25 +72,29 @@ public class EnteringExample {
         int count = 0;
         for (char aChar : chars) {
             String tmp = "" + aChar;
-            if (checkOperation(tmp))
+            if (checkOperation(tmp)) {
                 count++;
+            }
         }
-        if (count != 1)
+        if (count != 1) {
             throw new IllegalArgumentException(expression + " unknown calculation operation");
+        }
     }
 
     boolean checkOperation(String s) {
         for (String c : operations) {
-            if (s.contains(c))
+            if (s.contains(c)) {
                 return true;
+            }
         }
         return false;
     }
 
     boolean isRomanNumber(String s) {
         for (String s1 : roman) {
-            if (s.equals(s1))
+            if (s.equals(s1)) {
                 return true;
+            }
         }
         return false;
     }
@@ -95,16 +102,18 @@ public class EnteringExample {
     boolean isArabicNumber(String s) {
         int a = Integer.parseInt(s);
         for (int i : arabic) {
-            if (a == i)
+            if (a == i) {
                 return false;
+            }
         }
         return true;
     }
 
     void spaceCount(String s) {
         for (char c : s.toCharArray()) {
-            if (c == ' ')
+            if (c == ' ') {
                 spaceCount++;
+            }
         }
     }
 }

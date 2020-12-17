@@ -36,16 +36,18 @@ public enum RomanNumeral {
                 roman = roman.substring(symbol.name().length());
                 i--;
             }
-            if (roman.length() == 0)
+            if (roman.length() == 0) {
                 break;
+            }
         }
 
         return result;
     }
 
     public static String arabicToRoman(int arabic) {
-        if (arabic == 0)
+        if (arabic == 0) {
             return "N";
+        }
 
         boolean negative = false;
         if (arabic < 0) {
@@ -63,13 +65,15 @@ public enum RomanNumeral {
                 arabic -= symbol.getValue();
                 i--;
             }
-            if (arabic == 0)
+            if (arabic == 0) {
                 break;
+            }
         }
 
-        if (negative)
-            return "-" + roman.toString();
-        else
+        if (negative) {
+            return roman.insert(0, "-").toString();
+        } else {
             return roman.toString();
+        }
     }
 }

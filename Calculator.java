@@ -12,12 +12,13 @@ public class Calculator {
             case "+" -> number1 + number2;
             case "-" -> number1 - number2;
             case "*" -> number1 * number2;
-            default -> number1 / number2;
+            default  -> number1 / number2;
         };
 
-        if (check)
+        if (check) {
             System.out.println(RomanNumeral.arabicToRoman(sum));
-        else
+        } else {
             System.out.println(sum);
+        }
     }
 }
